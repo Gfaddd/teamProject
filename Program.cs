@@ -1,62 +1,95 @@
 ﻿using System.Diagnostics;
 using teamProject;
 
-ResearchTeam team = new ResearchTeam("qwe", "qwe", 0, TimeFrame.TwoYear, new Paper[] { new Paper("qwe", new Person(), DateTime.MinValue) });
-//Console.WriteLine(team + "\n\n");
+ResearchTeam team = new ResearchTeam("qwe", "qwe", 0, TimeFrame.TwoYear, new Paper[] 
+{
+    new Paper("qwe", new Person(), DateTime.MinValue) 
+});
+Console.WriteLine(team.ToShortString() + "\n\n");
 try
 {
-    team.NameOrg = "AAA";
-    team.ThemeIsled = "";
     team.RegNum = -43;
-    team.DurIsled = TimeFrame.LongYear;
-    team.SpisPub = new Paper[] { new Paper("bbb", new Person(), new DateTime(1111, 5, 4)), new Paper("ttt", new Person(), DateTime.MinValue) };
-    //Console.WriteLine(team);
-    team.AddPapers(new Paper[] { new Paper("asd", new Person(), DateTime.Now), new Paper("zxc", new Person(), DateTime.Now) });
 }
-catch(ArgumentException e)
+catch (ArgumentException e)
 {
     Console.WriteLine(e.Message);
 }
+team.NameOrg = "AAA";
+team.ThemeIsled = "wqewr";
+team.RegNum = 4;
+team.DurIsled = TimeFrame.Long;
+team.SpisPub = new Paper[] 
+{
+    new Paper("bbb", new Person(), new DateTime(1111, 5, 4)),
+    new Paper("ttt", new Person(), DateTime.MinValue)
+};
+Console.WriteLine("\n\n"+team);
+team.AddPapers(new Paper[] 
+{
+    new Paper("asd", new Person(), DateTime.Now),
+    new Paper("zxc", new Person(), DateTime.Now) 
+});
 //Console.WriteLine(team);
 if (team.firstPaper() == null)
 {
     Console.WriteLine("NULL");
 }
 Console.WriteLine(team.firstPaper());
-Console.WriteLine($"{team[TimeFrame.Year]} {team[TimeFrame.TwoYear]} {team[TimeFrame.LongYear]}");
+Console.WriteLine($"Год: {team[TimeFrame.Year]}\nДва года: {team[TimeFrame.TwoYear]}\nБолее долгий срок: {team[TimeFrame.Long]}");
 
-Stopwatch stopwatch = Stopwatch.StartNew();
-bool exit = true;
-while (exit)
+bool exit = false;
+Stopwatch stopwatch = stopwatch = Stopwatch.StartNew();
+while (!exit)
 {
-    Console.WriteLine("Выбирете пункт меню:\n0 - Выход из меню\n1 - Одномерный массив\n2 - Двумерный массив\n3 - Двумерный ступенчитый массив\nВведите пункт меню:");
+        stopwatch.Reset();
+    Console.Write("Выбирете пункт меню:\n0 - Выход из меню\n1 - Одномерный массив\n2 - Двумерный массив\n3 - Двумерный ступенчитый массив\nВведите пункт меню: ");
     int p = int.Parse(Console.ReadLine());
     switch (p)
     {
         case 0:
             {
                 Console.WriteLine("Вы вышли из меню");
-                exit = false;
+                exit = true;
                 break;
             }
         case 1:
             {
-                Paper[] paper1 = new Paper[] { new Paper("111", new Person(), new DateTime(1111, 5, 4)), new Paper("222", new Person(), DateTime.MinValue), new Paper("333", new Person(), new DateTime(1111, 5, 4)), new Paper("444", new Person(), DateTime.MinValue), new Paper("555", new Person(), new DateTime(1111, 5, 4)), new Paper("666", new Person(), DateTime.MinValue) };
+                Paper[] paper = 
+                {
+                    new Paper("111", new Person(), new DateTime(1111, 5, 4)),
+                    new Paper("222", new Person(), DateTime.MinValue),
+                    new Paper("333", new Person(), new DateTime(1111, 5, 4)),
+                    new Paper("444", new Person(), DateTime.MinValue),
+                    new Paper("555", new Person(), new DateTime(1111, 5, 4)),
+                    new Paper("666", new Person(), DateTime.MinValue)
+                };
                 stopwatch.Start();
-                foreach (Paper paper in paper1)
-                    Console.WriteLine(paper);
+                foreach (Paper i in paper)
+                    Console.WriteLine(i);
                 stopwatch.Stop();
                 break;
             }
         case 2:
             {
-                Paper[,] paper2 = new Paper[,] { { new Paper("111", new Person(), new DateTime(1111, 5, 4)), new Paper("222", new Person(), DateTime.MinValue)  ,new Paper("333", new Person(), new DateTime(1111, 5, 4)) }, {new Paper("444", new Person(), DateTime.MinValue), new Paper("555", new Person(), new DateTime(1111, 5, 4)), new Paper("666", new Person(), DateTime.MinValue) } };
-                stopwatch.Start();
-                for (int i = 0; i < paper2.GetLength(0); i++)
+                Paper[,] paper = new Paper[,] 
                 {
-                    for (int j = 0; j < paper2.GetLength(1); j++)
                     {
-                        Console.WriteLine(paper2[i,j]);
+                        new Paper("111", new Person(), new DateTime(1111, 5, 4)),
+                        new Paper("222", new Person(), DateTime.MinValue),
+                        new Paper("333", new Person(), new DateTime(1111, 5, 4))
+                    },
+                    {
+                        new Paper("444", new Person(), DateTime.MinValue),
+                        new Paper("555", new Person(), new DateTime(1111, 5, 4)),
+                        new Paper("666", new Person(), DateTime.MinValue)
+                    }
+                };
+                stopwatch.Start();
+                for (int i = 0; i < paper.GetLength(0); i++)
+                {
+                    for (int j = 0; j < paper.GetLength(1); j++)
+                    {
+                        Console.WriteLine(paper[i,j]);
                     }
                     Console.WriteLine();
                 }
@@ -65,18 +98,26 @@ while (exit)
             }
             case 3:
             {
-                
-                Paper[][] paper3 = new Paper[3][];
-                paper3[0] = new Paper[1] { new Paper("111", new Person(), new DateTime(1111, 5, 4)) };
-                paper3[1] = new Paper[2] { new Paper("222", new Person(), DateTime.MinValue), new Paper("333", new Person(), new DateTime(1111, 5, 4))};
-                paper3[2] = new Paper[3] { new Paper("444", new Person(), DateTime.MinValue), new Paper("555", new Person(), new DateTime(1111, 5, 4)), new Paper("666", new Person(), DateTime.MinValue) };
+                Paper[][] paper = new Paper[3][];
+                paper[0] = new Paper[1] { new Paper("111", new Person(), new DateTime(1111, 5, 4)) };
+                paper[1] = new Paper[2] 
+                {
+                    new Paper("222", new Person(), DateTime.MinValue),
+                    new Paper("333", new Person(), new DateTime(1111, 5, 4))
+                };
+                paper[2] = new Paper[3] 
+                { 
+                    new Paper("444", new Person(), DateTime.MinValue), 
+                    new Paper("555", new Person(), new DateTime(1111, 5, 4)),
+                    new Paper("666", new Person(), DateTime.MinValue)
+                };
                 stopwatch.Start();
 
-                for (int i = 0; i < paper3.GetLength(0); i++)
+                for (int i = 0; i < paper.GetLength(0); i++)
                 {
-                    for (int j = 0; j < paper3[i].Length; j++)
+                    for (int j = 0; j < paper[i].Length; j++)
                     {
-                        Console.WriteLine(paper3[i][j]);
+                        Console.WriteLine(paper[i][j]);
                     }
                     Console.WriteLine();
                 }
@@ -86,16 +127,18 @@ while (exit)
         default:
             {
                 Console.WriteLine("Такого пункта меню нет, выберите заново");
-                break;
+                continue;
             }
     }
+    if(!exit)
+        Console.WriteLine($"Время выполнения: {stopwatch.ElapsedMilliseconds }\n");
+
 }
 
-Console.WriteLine("Время выполнения: " + stopwatch.ElapsedMilliseconds);
 enum TimeFrame
 {
     Null,
     Year,
     TwoYear,
-    LongYear,
+    Long,
 }

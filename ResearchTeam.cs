@@ -94,13 +94,13 @@ namespace teamProject
                 }
             }
 
-            return (index == int.MaxValue) ?null: spisPub[index];
+            return index == int.MaxValue ?null: spisPub[index];
         }
         public bool this[TimeFrame value]
         {
             get => durIsled == value;
         }
-        public void AddPapers(params Paper[] spis)//spisPub  spis  temp
+        public void AddPapers(params Paper[] spis)
         {
             Paper[] temp = new Paper[spis.Length + spisPub.Length];
             Array.Copy(spisPub, 0, temp, 0, SpisPub.Length);
