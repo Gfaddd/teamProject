@@ -11,6 +11,18 @@ namespace teamProject
         string firstName;
         string lastName;
         DateTime birthday;
+        int countPublication;
+
+        public int countPrivateation
+        {
+            get => countPublication;
+            set
+            {
+                if (value < 0)
+                    throw new Exception("invlaid value");
+                countPublication = value;
+            }
+        }
 
         public DateTime Birthday
         {
@@ -67,13 +79,44 @@ namespace teamProject
             this.birthday = DateTime.Today;
         }
 
-        public Person(string firstName, string lastName, DateTime birthday)
+        public Person(string firstName, string lastName, DateTime birthday,int countPublication)
         {
             this.firstName = firstName;
             this.lastName = lastName;
             this.birthday = birthday;   
+            this.countPublication = countPublication;
         }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || obj.GetType() != this.GetType())
+                return false;
+                
+            Person other = (Person)obj;
+            return firstName == other.firstName && lastName == other.lastName && birthday == other.birthday;
+        }
+        public static bool operator ==(Person p1, Person p2)
+        {
+            if (ReferenceEquals(p1, p2))
+            {
+                return true;
+            }
+            if (p1 is null  ||p2 is null)
+                return false;
+            return p1.Equals(p2);
 
+        }
+        public static bool operator !=(Person p1, Person p2)
+        {
+            return !(p1 == p2);
+        }
+        public override int GetHashCode()
+        {
+            return (firstName, lastName, birthday).GetHashCode();
+        }
+        public virtual object DeepCopy()
+        {
+            return new Person(this.firstName, this.lastName, this.birthday,this.countPublication);
+        }
         public override string ToString() => $"Имя: {firstName}\nФамилия: {LastName}\nГод рождения: {birthday.ToShortDateString()}";
 
         public virtual string ToShortString() => $"Имя: {firstName}; Фамилия: {LastName}";
